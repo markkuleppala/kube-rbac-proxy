@@ -2,6 +2,12 @@ name: Kube RBAC Proxy CI
 
 on:
     push:
+        tags:
+          - master
+          - 'release-**'
+
+env:
+    MODULE: GO111MODULE=on
 
 jobs:
     build:
@@ -9,12 +15,12 @@ jobs:
         runs-on: ubuntu-latest
     
     steps:
-        - name: Checkout code into the Go module directory
-        - uses: actions/checkout@v2
+      - name: Checkout code into the Go module directory
+        uses: actions/checkout@v2
         
-        - name: Set up Go 1.13.x
-        - uses: actions/setup-go@v2
-        - with:
+      - name: Set up Go 1.13.x
+        uses: actions/setup-go@v2
+        with:
             go-version: 1.13
-        - id: go
+        id: go
         
