@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
+      with:
+        path: github.com/brancz/kube-rbac-proxy
       id: go-test
 
   build:
@@ -24,7 +26,7 @@ jobs:
     - name: Set up Go 1.13.x
       uses: actions/setup-go@v2
       with:
-        go-version: $VERSION
+        go-version: 1.13.x
       id: go
 
     - name: Check out code into the Go module directory
