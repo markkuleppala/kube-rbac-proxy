@@ -5,6 +5,7 @@ on:
     tags:
       - master
       - 'release-**'
+      - 'github-actions-test'
 
 env:
   MODULE: GO111MODULE=on
