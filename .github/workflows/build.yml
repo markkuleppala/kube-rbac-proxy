@@ -2,7 +2,7 @@ name: Kube RBAC Proxy CI
 
 on:
   push:
-    tags:
+    branches:
       - master
       - 'release-**'
       - 'github-actions-test'
