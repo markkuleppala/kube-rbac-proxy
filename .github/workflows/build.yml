@@ -31,8 +31,8 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: quay.io
-        username: ${QUAY_USERNAME}
-        password: ${QUAY_PASSWORD}
+        username: markku
+        password: bu7LTfUy4NJbjrd
     - name: Push
       if: ${{ github.event_name != 'pull_request' }}
       uses: docker/build-push-action@v2
