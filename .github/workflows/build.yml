@@ -37,9 +37,13 @@ jobs:
         password: ${{ secrets.QUAY_PASSWORD }}
     - name: Build and push
       run: |
-        VERSION="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
-        docker build -t ${QUAY_REPOSITORY}:$VERSION
-        docker push ${QUAY_REPOSITORY}:$VERSION
+        TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
+        ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
+        echo $TAG $ID
+        docker tag $ID ${QUAY_REPOSITORY}:$TAG
+        docker push ${QUAY_REPOSITORY}:$TAG
+    # TAG="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
+
     # - name: Set up QEMU
     #   uses: docker/setup-qemu-action@v1
     # - name: Set up Docker Buildx
