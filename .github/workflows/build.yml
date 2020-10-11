@@ -7,6 +7,7 @@ env:
   GO111MODULE: on
   IMPORT_PATH: github.com/markkuleppala/kube-rbac-proxy
   QUAY_PATH: quay.io/brancz/kube-rbac-proxy
+  QUAY_REPOSITORY: markku/kube-rbac-proxy
 
 jobs:
   create-cluster: # OK
@@ -34,13 +35,11 @@ jobs:
         registry: quay.io
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}
-    - name: Push
+    - name: Build and push
       run: |
         VERSION="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
-        echo $VERSION
-        docker images
-        docker ps
-        docker push markku/kube-rbac-proxy
+        docker build -t ${QUAY_REPOSITORY}:$VERSION
+        docker push ${QUAY_REPOSITORY}:$VERSION
     # - name: Set up QEMU
     #   uses: docker/setup-qemu-action@v1
     # - name: Set up Docker Buildx
