@@ -24,6 +24,7 @@ jobs:
         VERSION=local make container
         kind get clusters
         kind load docker-image quay.io/brancz/kube-rbac-proxy:local
+        kind get clusters
         make test-e2e
   # build-push:
   #   needs: make-container
