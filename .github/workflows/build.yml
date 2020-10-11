@@ -19,11 +19,11 @@ jobs:
         curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
         kind create cluster --config test/e2e/kind-config/kind-config.yaml
       continue-on-error: false
-    - name: Create container & run tests
-      run: |
-        VERSION=local make container
-        kind load docker-image ${QUAY_PATH}:local
-        make test-e2e
+    # - name: Create container & run tests
+    #   run: |
+    #     VERSION=local make container
+    #     kind load docker-image ${QUAY_PATH}:local
+    #     make test-e2e
     - name: Build Push
       if: ${{ github.event_name != 'pull_request' }}
       uses: docker/build-push-action@v1
