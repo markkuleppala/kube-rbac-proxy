@@ -8,7 +8,7 @@ env:
   IMPORT_PATH: github.com/brancz/kube-rbac-proxy
 
 jobs:
-  create-cluster:
+  create-cluster: # OK
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,8 +19,9 @@ jobs:
     needs: create-cluster
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - run: |
-        VERSION=local make container
+        make container
         kind load docker-image quay.io/brancz/kube-rbac-proxy:local
         make test-e2e
   # build-push:
