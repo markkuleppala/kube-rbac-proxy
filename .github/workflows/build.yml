@@ -41,7 +41,7 @@ jobs:
         ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
         echo $TAG $ID
         docker images
-        docker tag $ID {QUAY_REPOSITORY}:$TAG
+        docker tag $ID ${QUAY_REPOSITORY}:$TAG
         docker images
         docker push ${QUAY_REPOSITORY}:$TAG
     # TAG="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
