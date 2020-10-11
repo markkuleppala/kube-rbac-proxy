@@ -25,11 +25,11 @@ jobs:
         kind load docker-image ${QUAY_PATH}:local
         make test-e2e
     - name: Build Push
-      if: ${GITHUB_EVENT_NAME} != "pull_request"
+      if: contains(GITHUB_EVENT_NAME, "pull_request")
       uses: docker/build-push-action@v1
       with:
         username: ${QUAY_USERNAME}
         password: ${QUAY_PASSWORD}
         registry: ${QUAY_PATH}
         repository: ${IMPORT_PATH}
-        tags: $GITHUB_REF
+        tags: ${GITHUB_REF}
