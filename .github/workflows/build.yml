@@ -27,6 +27,7 @@ jobs:
       #  make test-e2e
   login-push:
     if: ${{ github.event_name != 'pull_request' }}
+    needs: create-cluster
     runs-on: ubuntu-latest
     steps:
     - name: Login to Quay
