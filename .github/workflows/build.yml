@@ -41,7 +41,7 @@ jobs:
     - name: Push
       uses: docker/build-push-action@v2
       with:
-        #context: ./
-        #file: ./Dockerfile
+        context: ./
+        file: ./Dockerfile
         push: true
         tags: brancz/kube-rbac-proxy:github-action-test
