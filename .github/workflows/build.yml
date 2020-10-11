@@ -21,8 +21,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        make container
-        kind load docker-image quay.io/brancz/kube-rbac-proxy:${VERSION}
+        VERSION=local make container
+        kind load docker-image quay.io/brancz/kube-rbac-proxy:local
         make test-e2e
   # build-push:
   #   needs: make-container
