@@ -37,6 +37,7 @@ jobs:
     - name: Push
       run: |
         VERSION="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
+        echo $VERSION
         docker images
         docker ps –a
         docker push markku/kube-rbac-proxy
