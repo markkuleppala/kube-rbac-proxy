@@ -33,4 +33,4 @@ jobs:
         password: ${QUAY_PASSWORD}
         registry: ${QUAY_PATH}
         #repository: ${IMPORT_PATH}
-        tags: ${GITHUB_REF}
+        tags: ${{ github.ref }}
