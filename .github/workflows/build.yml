@@ -5,8 +5,8 @@ on: [push, pull_request]
 env:
   VERSION: 1.13.x
   GO111MODULE: on
-  IMPORT_PATH: github.com/brancz/kube-rbac-proxy
-  QUAY_PATH: quay.io/brancz/kube-rbac-proxy
+  IMPORT_PATH: github.com/markkuleppala/kube-rbac-proxy
+  QUAY_PATH: quay.io/markku/kube-rbac-proxy
 
 jobs:
   create-cluster: # OK
@@ -44,4 +44,4 @@ jobs:
         context: ./
         file: ./Dockerfile
         push: true
-        tags: brancz/kube-rbac-proxy:local
+        tags: markku/kube-rbac-proxy:local
