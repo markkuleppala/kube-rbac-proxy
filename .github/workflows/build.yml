@@ -36,7 +36,7 @@ jobs:
         password: ${{ secrets.QUAY_PASSWORD }}
     - name: Push
       run: |
-        docker push markku/kube-rbac-proxy:local
+        docker push ${QUAY_PATH}:local
     # - name: Set up QEMU
     #   uses: docker/setup-qemu-action@v1
     # - name: Set up Docker Buildx
