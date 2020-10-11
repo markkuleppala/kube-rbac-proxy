@@ -6,7 +6,6 @@ env:
   VERSION: 1.13.x
   GO111MODULE: on
   QUAY_PATH: quay.io/brancz/kube-rbac-proxy
-  QUAY_REPOSITORY: quay.io/markku/kube-rbac-proxy
 
 jobs:
   create-cluster:
@@ -23,7 +22,7 @@ jobs:
       run: |
         VERSION=local make container
         kind load docker-image ${QUAY_PATH}:local
-      #  make test-e2e
+        make test-e2es
     - name: Login to Quay
       if: ${{ github.event_name != 'pull_request' }}
       uses: docker/login-action@v1
@@ -34,8 +33,7 @@ jobs:
     - name: Push to Quay
       if: ${{ github.event_name != 'pull_request' }}
       run: |
-        docker images
         TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
-        docker tag $ID ${QUAY_REPOSITORY}:$TAG
-        docker push ${QUAY_REPOSITORY}:$TAG
+        docker tag $ID ${QUAY_PATH}:$TAG
+        docker push ${QUAY_PATH}:$TAG
