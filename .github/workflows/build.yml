@@ -7,7 +7,7 @@ env:
   GO111MODULE: on
   IMPORT_PATH: github.com/markkuleppala/kube-rbac-proxy
   QUAY_PATH: quay.io/brancz/kube-rbac-proxy
-  QUAY_REPOSITORY: markku/kube-rbac-proxy
+  QUAY_REPOSITORY: quay.io/markku/kube-rbac-proxy
 
 jobs:
   create-cluster: # OK
@@ -40,8 +40,8 @@ jobs:
         TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
         echo $TAG $ID
-        docker tag $ID ${QUAY_REPOSITORY}:$TAG
-        docker push quay.io/${QUAY_REPOSITORY}:$TAG
+        docker tag $ID {QUAY_REPOSITORY}:$TAG
+        docker push ${QUAY_REPOSITORY}:$TAG
     # TAG="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
 
     # - name: Set up QEMU
