@@ -11,16 +11,14 @@ jobs:
   create-cluster: # OK
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: |
+    - name: Create cluster
+      uses: actions/checkout@v2
+      run: |
         curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
         kind create cluster --config test/e2e/kind-config/kind-config.yaml
-  make-container:
-    needs: create-cluster
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - run: |
+        continue-on-error: false
+    - name: Create container & run tests
+      run: |
         VERSION=local make container
         kind get clusters
         kind load docker-image quay.io/brancz/kube-rbac-proxy:local
