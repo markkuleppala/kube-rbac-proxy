@@ -36,6 +36,7 @@ jobs:
         password: ${{ secrets.QUAY_PASSWORD }}
     - name: Push
       run: |
+        VERSION="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         docker images
         docker push markku/kube-rbac-proxy
     # - name: Set up QEMU
