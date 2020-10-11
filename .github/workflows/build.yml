@@ -38,6 +38,7 @@ jobs:
       run: |
         VERSION="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         docker images
+        docker ps –a
         docker push markku/kube-rbac-proxy
     # - name: Set up QEMU
     #   uses: docker/setup-qemu-action@v1
