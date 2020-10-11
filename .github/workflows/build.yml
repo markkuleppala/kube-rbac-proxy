@@ -25,12 +25,18 @@ jobs:
     #     kind load docker-image ${QUAY_PATH}:local
     #     make test-e2e
     
-    - name: Build Push
+    - name: Login to Quay
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: docker/login-action@v1
+      with:
+        registry: quay.io
+        username: ${QUAY_USERNAME}
+        password: ${QUAY_PASSWORD}
+    - name: Push
       if: ${{ github.event_name != 'pull_request' }}
       uses: docker/build-push-action@v2
       with:
-        username: ${{ secrets.QUAY_USERNAME }}
-        password: ${QUAY_PASSWORD}
-        registry: ${QUAY_PATH}
-        #repository: ${IMPORT_PATH}
-        tags: ${{ github.ref }}
+        context: ./
+        file: ./Dockerfile
+        push: true
+        tags: brancz/kube-rbac-proxy:${{} github.ref }}
