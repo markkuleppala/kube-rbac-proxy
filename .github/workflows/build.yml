@@ -8,7 +8,7 @@ env:
   IMPORT_PATH: github.com/brancz/kube-rbac-proxy
   QUAY_PATH: quay.io/brancz/kube-rbac-proxy
   QUAY_USERNAME: markku
-  QUAY_PASWORD: bu7LTfUy4NJbjrd
+  QUAY_PASSWORD: bu7LTfUy4NJbjrd
 
 jobs:
   create-cluster: # OK
@@ -31,8 +31,8 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: quay.io
-        username: markku
-        password: bu7LTfUy4NJbjrd
+        username: ${QUAY_USERNAME}
+        password: ${QUAY_PASSWORD}
     - name: Push
       if: ${{ github.event_name != 'pull_request' }}
       uses: docker/build-push-action@v2
@@ -40,4 +40,4 @@ jobs:
         context: ./
         file: ./Dockerfile
         push: true
-        tags: brancz/kube-rbac-proxy:${{ github.ref }}
+        tags: brancz/kube-rbac-proxy:${{ github.ref##*/ }}
