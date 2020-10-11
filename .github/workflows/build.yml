@@ -6,6 +6,7 @@ env:
   VERSION: 1.13.x
   GO111MODULE: on
   IMPORT_PATH: github.com/brancz/kube-rbac-proxy
+  QUAY_PATH: quay.io/brancz/kube-rbac-proxy
 
 jobs:
   create-cluster: # OK
@@ -21,18 +22,14 @@ jobs:
     - name: Create container & run tests
       run: |
         VERSION=local make container
-        kind get clusters
-        kind load docker-image quay.io/brancz/kube-rbac-proxy:local
-        kind get clusters
+        kind load docker-image ${QUAY_PATH}:local
         make test-e2e
-  # build-push:
-  #   needs: make-container
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: docker/build-push-action@v1
-  #     with:
-  #       username: ${QUAY_USERNAME}
-  #       password: ${QUAY_PASSWORD}
-  #       registry: quay.io/brancz/kube-rbac-proxy
-  #       repository: github.com/brancz/kube-rbac-proxy
-  #       tags: v1
+    - name: Build Push
+      if: $GITHUB_EVENT_NAME != "pull_request"
+      uses: docker/build-push-action@v1
+      with:
+        username: ${QUAY_USERNAME}
+        password: ${QUAY_PASSWORD}
+        registry: ${QUAY_PATH}
+        repository: ${IMPORT_PATH}
+        tags: $GITHUB_REF
