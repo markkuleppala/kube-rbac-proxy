@@ -4,48 +4,34 @@ on: [push, pull_request]
 
 env:
   VERSION: 1.13.x
-  GOPATH: github.com/markkuleppala/kube-rbac-proxy
   GO111MODULE: on
 
 jobs:
-  test-gopath:
+  create-cluster:
+    name: Create cluster
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-      with:
-        path: github.com/markkuleppala/kube-rbac-proxy
-      id: go-test
-
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - name: Set up Go 1.13.x
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.13.x
-      id: go
-
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-
-    - name: Get dependencies
-      run: |
-        go get -v -t -d ./...
-        if [ -f Gopkg.toml ]; then
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-            dep ensure
-        fi
-
-    - name: Build
-      run: go build -v .
-
-    - name: Test
-      run: |
+    - run: |
         curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
         kind create cluster --config test/e2e/kind-config/kind-config.yaml
-        fi
-      
+  make-container:
+    name: Make container and E2E test
+    needs: create-cluster
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        VERSION=local make container
+        kind load docker-image quay.io/brancz/kube-rbac-proxy:local
+        make test-e2e
+  build-push:
+    name: build-push
+    needs: make-container
+    runs-on: ubuntu-latest
+    steps:
+    - uses: docker/build-push-action@v1
+      with:
+        username: ${QUAY_USERNAME}
+        password: ${QUAY_PASSWORD}
+        registry: quay.io/brancz/kube-rbac-proxy
+        repository: github.com/brancz/kube-rbac-proxy
+        tags: v1
