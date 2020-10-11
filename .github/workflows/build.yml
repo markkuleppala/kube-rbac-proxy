@@ -12,8 +12,8 @@ env:
 
 jobs:
   create-cluster: # OK
-    # runs-on: ubuntu-latest
-    # steps:
+    runs-on: ubuntu-latest
+    steps:
     # - name: Checkout repository
     #   uses: actions/checkout@v2
     # - name: Create cluster
@@ -26,7 +26,6 @@ jobs:
     #     VERSION=local make container
     #     kind load docker-image ${QUAY_PATH}:local
     #     make test-e2e
-    
     - name: Login to Quay
       if: ${{ github.event_name != 'pull_request' }}
       uses: docker/login-action@v1
