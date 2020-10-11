@@ -39,4 +39,4 @@ jobs:
         context: ./
         file: ./Dockerfile
         push: true
-        tags: brancz/kube-rbac-proxy:${{} github.ref }}
+        tags: brancz/kube-rbac-proxy:${{ github.ref }}
