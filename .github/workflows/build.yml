@@ -7,7 +7,7 @@ env:
   GO111MODULE: on
   IMPORT_PATH: github.com/brancz/kube-rbac-proxy
   QUAY_PATH: quay.io/brancz/kube-rbac-proxy
-  QUAY_USERNAME: markku
+  QUAY_USERNAME: markku@smartly.io
   QUAY_PASWORD: bu7LTfUy4NJbjrd
 
 jobs:
