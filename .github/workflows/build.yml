@@ -14,7 +14,7 @@ jobs:
     - uses: actions/checkout@v2
     - run: |
         curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
-        kind create cluster --config /test/e2e/kind-config/kind-config.yaml
+        kind create cluster --config test/e2e/kind-config/kind-config.yaml
   make-container:
     needs: create-cluster
     runs-on: ubuntu-latest
@@ -23,14 +23,14 @@ jobs:
         VERSION=local make container
         kind load docker-image quay.io/brancz/kube-rbac-proxy:local
         make test-e2e
-  build-push:
-    needs: make-container
-    runs-on: ubuntu-latest
-    steps:
-    - uses: docker/build-push-action@v1
-      with:
-        username: ${QUAY_USERNAME}
-        password: ${QUAY_PASSWORD}
-        registry: quay.io/brancz/kube-rbac-proxy
-        repository: github.com/brancz/kube-rbac-proxy
-        tags: v1
+  # build-push:
+  #   needs: make-container
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: docker/build-push-action@v1
+  #     with:
+  #       username: ${QUAY_USERNAME}
+  #       password: ${QUAY_PASSWORD}
+  #       registry: quay.io/brancz/kube-rbac-proxy
+  #       repository: github.com/brancz/kube-rbac-proxy
+  #       tags: v1
