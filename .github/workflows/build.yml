@@ -7,7 +7,7 @@ env:
   GO111MODULE: on
   IMPORT_PATH: github.com/brancz/kube-rbac-proxy
   QUAY_PATH: quay.io/brancz/kube-rbac-proxy
-  QUAY_USERNAME: markku@smartly.io
+  QUAY_USERNAME: markku 
   QUAY_PASWORD: bu7LTfUy4NJbjrd
 
 jobs:
@@ -31,8 +31,8 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: quay.io
-        username: ${QUAY_USERNAME}
-        password: ${QUAY_PASSWORD}
+        username: $QUAY_USERNAME
+        password: $QUAY_PASSWORD
     - name: Push
       if: ${{ github.event_name != 'pull_request' }}
       uses: docker/build-push-action@v2
