@@ -41,7 +41,7 @@ jobs:
         ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
         echo $TAG $ID
         docker tag $ID ${QUAY_REPOSITORY}:$TAG
-        docker push ${QUAY_REPOSITORY}:$TAG
+        docker push quay.io/${QUAY_REPOSITORY}:$TAG
     # TAG="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
 
     # - name: Set up QEMU
