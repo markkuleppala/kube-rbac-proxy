@@ -21,7 +21,7 @@ jobs:
     - name: Create container & run tests
       run: |
         VERSION=local make container
-        kind load docker-image ${QUAY_PATH}:local
+        kind load docker-image ${QUAY_REPOSITORY}:local
       #  make test-e2e
     - name: Login to Quay
       if: ${{ github.event_name != 'pull_request' }}
