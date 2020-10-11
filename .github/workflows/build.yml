@@ -5,12 +5,10 @@ on: [push, pull_request]
 env:
   VERSION: 1.13.x
   GO111MODULE: on
-  IMPORT_PATH: github.com/markkuleppala/kube-rbac-proxy
-  QUAY_PATH: quay.io/brancz/kube-rbac-proxy
   QUAY_REPOSITORY: quay.io/markku/kube-rbac-proxy
 
 jobs:
-  create-cluster: # OK
+  create-cluster:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -32,11 +30,11 @@ jobs:
         registry: quay.io
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}
-    - name: Build and push
+    - name: Push to Quay
       if: ${{ github.event_name != 'pull_request' }}
       run: |
         docker images
         TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
-        ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
+        ID="$(docker images ${QUAY_REPOSITORY}:local --format "{{.ID}}")"
         docker tag $ID ${QUAY_REPOSITORY}:$TAG
         docker push ${QUAY_REPOSITORY}:$TAG
