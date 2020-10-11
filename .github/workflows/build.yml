@@ -40,7 +40,9 @@ jobs:
         TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
         echo $TAG $ID
+        docker images
         docker tag $ID {QUAY_REPOSITORY}:$TAG
+        docker images
         docker push ${QUAY_REPOSITORY}:$TAG
     # TAG="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
 
