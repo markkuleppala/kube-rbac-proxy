@@ -6,7 +6,7 @@ env:
   VERSION: 1.13.x
   GO111MODULE: on
   IMPORT_PATH: github.com/markkuleppala/kube-rbac-proxy
-  QUAY_PATH: quay.io/markku/kube-rbac-proxy
+  QUAY_PATH: quay.io/brancz/kube-rbac-proxy
 
 jobs:
   create-cluster: # OK
@@ -37,7 +37,7 @@ jobs:
     - name: Push
       run: |
         docker images
-        docker push ${QUAY_PATH}:local
+        docker push markku/kube-rbac-proxy:local
     # - name: Set up QEMU
     #   uses: docker/setup-qemu-action@v1
     # - name: Set up Docker Buildx
