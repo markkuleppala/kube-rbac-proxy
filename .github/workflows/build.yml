@@ -20,7 +20,6 @@ jobs:
         version: ${{ env.kind-version }}
     - name: Wait for cluster to finish bootstrapping
       run: |
-        sudo mv kind /usr/local/bin/
         until [ "$(kubectl get pods --all-namespaces --no-headers | grep -cEv '([0-9]+)/\1')" -eq 0 ]; do
             sleep 5s
         done
