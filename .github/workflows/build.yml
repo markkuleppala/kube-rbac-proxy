@@ -27,9 +27,6 @@ jobs:
         done
         kubectl cluster-info
         kubectl get pods -A
-      # run: |
-      #   curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
-      #   kind create cluster --config test/e2e/kind-config/kind-config.yaml
       continue-on-error: false
     - name: Create container & run tests
       run: |
@@ -38,11 +35,6 @@ jobs:
         make test-e2e
     - name: Login and push to Quay
       if: github.event_name == 'push'
-      # uses: docker/login-action@v1
-      # with:
-      #   registry: quay.io
-      #   username: ${{ secrets.QUAY_USERNAME }}
-      #   password: ${{ secrets.QUAY_PASSWORD }}
       run: |
         docker login quay.io -u="${{ secrets.QUAY_USERNAME }}" -p="${{ secrets.QUAY_PASSWORD }}"
         TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
