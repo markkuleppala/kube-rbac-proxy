@@ -45,7 +45,7 @@ jobs:
       #   username: ${{ secrets.QUAY_USERNAME }}
       #   password: ${{ secrets.QUAY_PASSWORD }}
       run: |
-        docker login quay.io -u="${{ secrets.QUAY_USERNAME }} -p="${{ secrets.QUAY_PASSWORD }}"
+        docker login quay.io -u="${{ secrets.QUAY_USERNAME }}" -p="${{ secrets.QUAY_PASSWORD }}"
         TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
         docker tag $ID ${QUAY_REPOSITORY}:$TAG
