@@ -39,12 +39,13 @@ jobs:
         make test-e2e
     - name: Login and push to Quay
       if: github.event_name == 'push'
-      uses: docker/login-action@v1
-      with:
-        registry: quay.io
-        username: ${{ secrets.QUAY_USERNAME }}
-        password: ${{ secrets.QUAY_PASSWORD }}
+      # uses: docker/login-action@v1
+      # with:
+      #   registry: quay.io
+      #   username: ${{ secrets.QUAY_USERNAME }}
+      #   password: ${{ secrets.QUAY_PASSWORD }}
       run: |
+        docker login quay.io -u="${{ secrets.QUAY_USERNAME }} -p="${{ secrets.QUAY_PASSWORD }}"
         TAG="$(git rev-parse --abbrev-ref HEAD | tr / -)-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         ID="$(docker images ${QUAY_PATH}:local --format "{{.ID}}")"
         docker tag $ID ${QUAY_REPOSITORY}:$TAG
