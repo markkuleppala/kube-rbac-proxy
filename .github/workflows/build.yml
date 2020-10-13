@@ -19,7 +19,7 @@ jobs:
       uses: engineerd/setup-kind@v0.4.0
       with:
         version: ${{ env.kind-version }}
-    - name: Wait for cluster to finish bootstraping
+    - name: Wait for cluster to finish bootstrapping
       run: |
         until [ "$(kubectl get pods --all-namespaces --no-headers | grep -cEv '([0-9]+)/\1')" -eq 0 ]; do
             sleep 5s
