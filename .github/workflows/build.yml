@@ -8,7 +8,6 @@ env:
   QUAY_PATH: quay.io/brancz/kube-rbac-proxy
   QUAY_REPOSITORY: quay.io/markku/kube-rbac-proxy
   kind-version: 'v0.7.0'
-  kind-image: 'kind-linux-amd64'
 
 jobs:
   create-cluster:
