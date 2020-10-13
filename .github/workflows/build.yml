@@ -21,7 +21,7 @@ jobs:
       with:
         version: ${{ env.kind-version }}
         # image: ${{ env.kind-image }}
-    - name: Wait for cluster to finish bootstraping
+    # - name: Wait for cluster to finish bootstraping
       # run: |
       #   until [ "$(kubectl get pods --all-namespaces --no-headers | grep -cEv '([0-9]+)/\1')" -eq 0 ]; do
       #       sleep 5s
